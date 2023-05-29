@@ -4,35 +4,68 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// цикл Цезаря без Кириллицы
+
+
+
 namespace extension_method_homeWork
 {
     public static class StringExtension {  // класс расширения
      public static string CaesarEncrypt(this string input, int shift)
     {
         string result = "";
-        foreach (char c in input.ToUpper())
+        foreach (char c in input)
         {
-                if (c >= 'A' || c <= 'Z')
+                if (c >= (int)'A' && c <= (int)'Z')
                 {
                     char newChar = (char)(((int)c + shift - 65) % 26 + 65);
                     result += newChar;
                 }
-                else if (c >= 'a' || c <= 'z')
+                else if (c >= (int)'a' && c <= (int)'z')
                 {
-
+                    char newChar = (char)(((int)c + shift - 97) % 26 + 97);
+                    result += newChar;
                 }
-        }
+                else if (c >= (int)'А' && c <= (int)'Я') // шифрование для кириллицы
+                {
+                    char newChar = (char)(((int)c + shift - 1040) % 32 + 1040);
+                    result += newChar;
+                }
+                else if (c >= (int)'а' && c <= (int)'я') // шифрование для кириллицы
+                {
+                    char newChar = (char)(((int)c + shift - 1072) % 32 + 1072);
+                    result += newChar;
+                }
+            }
         return result;
     }
 
     public static string CaesarDecrypt(this string input, int shift)
     {
         string result = "";
-        foreach (char c in input.ToUpper())
+        foreach (char c in input)
         {
-                char newChar = (char)(((int)c - shift - 65 + 26) % 26 + 65);
-                result += newChar;          
-        }
+                if (c >= (int)'A' && c <= (int)'Z')
+                {
+                    char newChar = (char)(((int)c - shift - 65 + 26) % 26 + 65);
+                    result += newChar;
+                }          
+                else if (c >= (int)'a' && c <= (int)'z')
+                {
+                    char newChar = (char)(((int)c - shift - 97 + 26) % 26 + 97);
+                    result += newChar;
+                }
+                else if (c >= (int)'А' && c <= (int)'Я')
+                {
+                    char newChar = (char)(((int)c - shift - 1040 + 32) % 32 + 1040);
+                    result += newChar;
+                }
+                else if (c >= (int)'а' && c <= (int)'я') // шифрование для кириллицы
+                {
+                    char newChar = (char)(((int)c - shift - 1072 + 32) % 32 + 1072);
+                    result += newChar;
+                }
+            }
         return result;
     }
 
